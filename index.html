@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 10 Maths Chapter 2 Mock Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 550px;
+            width: 100%;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        h2 {
+            color: #16a085;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 15px;
+            background: #eef2f7;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+        .option {
+            background-color: #e7e7f2;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        .option:hover {
+            background-color: #d1d1eb;
+        }
+        .next-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 15px;
+            display: none;
+        }
+        .next-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>দশম শ্ৰেণী গণিত - Mock Test</h1>
+    <h2>অধ্যায় ২: বহুপদ (Polynomials)</h2>
+    <div class="score-board">
+        <div id="progress-display">প্ৰশ্ন: 1 / 20</div>
+        <div id="score-display">নম্বৰ: 0</div>
+    </div>
+    <div id="quiz-box">
+        <div class="question" id="question-text">প্ৰশ্ন লোড হৈ আছে...</div>
+        <div id="options-box"></div>
+    </div>
+    <button class="next-btn" id="next-button" onclick="loadNextQuestion()">পৰৱৰ্তী প্ৰশ্ন</button>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "১/ তলৰ কোনটো এটা দ্বিঘাত বহুপদ নহয়?",
+            options: ["3x² - 5x + 2", "x + 1/x", "x² - 4", "4x²"],
+            correct: 1
+        },
+        {
+            question: "২/ এটা দ্বিঘাত বহুপদৰ সৰ্বাধিক শূন্যৰ সংখ্যা কিমান?",
+            options: ["১", "২", "৩", "অসীম"],
+            correct: 1
+        },
+        {
+            question: "৩/ p(x) = x² - 3x - 4 বহুপদটোৰ শূন্য দুটাৰ যোগফল কিমান?",
+            options: ["-3", "3", "-4", "4"],
+            correct: 1
+        },
+        {
+            question: "৪/ 4x² - 4x + 1 বহুপদটোৰ শূন্যৰ গুণফল কিমান?",
+            options: ["-1", "1/4", "1", "-4"],
+            correct: 1
+        },
+        {
+            question: "৫/ যদি এটা বহুপদৰ লেখডালে X-অক্ষক ৩ টা বিন্দুত ছেদ কৰে, তেন্তে ইয়াৰ শূন্যৰ সংখ্যা হ'ব—",
+            options: ["১", "২", "৩", "০"],
+            correct: 2
+        },
+        {
+            question: "৬/ এটা দ্বিঘাত বহুপদৰ শূন্য দুটাৰ যোগফল -5 আৰু গুণফল 6 হ'লে বহুপদটো হ'ব—",
+            options: ["x² - 5x + 6", "x² + 5x + 6", "x² + 5x - 6", "x² - 5x - 6"],
+            correct: 1
+        },
+        {
+            question: "৭/ x² - 2x - 8 বহুপদটোৰ শূন্য দুটা কি কি?",
+            options: ["-2, 4", "2, -4", "-2, -4", "2, 4"],
+            correct: 0
+        },
+        {
+            question: "৮/ a x² + b x + c বহুপদটোৰ এটা শূন্য আনটোৰ প্ৰতিক্ৰম (Reciprocal) হ'লে—",
+            options: ["a = b", "b = c", "a = c", "a = 0"],
+            correct: 2
+        },
+        {
+            question: "৯/ x² - 3 বহুপদটোৰ শূন্য দুটা কি কি?",
+            options: ["3, -3", "√3, -√3", "√3, √3", "3, 0"],
+            correct: 1
+        },
+        {
+            question: "১০/ x² - 2x - 3 বহুপদটোৰ শূন্যৰ গুণফল কিমান?",
+            options: ["-3", "3", "2", "-2"],
+            correct: 0
+        },
+        {
+            question: "১১/ যদি এটা দ্বিঘাত বহুপদৰ লেখটোৱে X-অক্ষক কেতিয়াও স্পৰ্শ বা ছেদ নকৰে, তেন্তে ইয়াৰ বাস্তৱ শূন্যৰ সংখ্যা হ'ব—",
+            options: ["১", "২", "০", "অসীম"],
+            correct: 2
+        },
+        {
+            question: "১২/ p(x) = x³ - x বহুপদটোৰ মাত্ৰা (Degree) কিমান?",
+            options: ["১", "২", "৩", "০"],
+            correct: 2
+        },
+        {
+            question: "১৩/ যদি এটা বহুপদৰ শূন্য দুটাৰ যোগফল আৰু গুণফল দুয়োটাই 4 হয়, তেন্তে বহুপদটো হ'ব—",
+            options: ["x² + 4x + 4", "x² - 4x + 4", "x² - 4x - 4", "4x² - 4x + 1"],
+            correct: 1
+        },
+        {
+            question: "১৪/ a x² + b x + c দ্বিঘাত বহুপদটোৰ লেখটো এটা ওপৰলৈ মুখ কৰা অধিবৃত্ত হ'ব যদি—",
+            options: ["a > 0", "a < 0", "a = 0", "b > 0"],
+            correct: 0
+        },
+        {
+            question: "১৫/ k x² + 2x + 3k বহুপদটোৰ শূন্যৰ যোগফল সিহঁতৰ গুণফলৰ সমান হ'লে k ৰ মান—",
+            options: ["2/3", "-2/3", "-3/2", "3"],
+            correct: 1
+        },
+        {
+            question: "১৬/ p(x) = 2x² - 8x + 6 বহুপদটোৰ এটা শূন্য 1 হ'লে আনটো শূন্য হ'ব—",
+            options: ["2", "3", "-3", "-1"],
+            correct: 1
+        },
+        {
+            question: "১৭/ x² + 99x + 127 বহুপদটোৰ শূন্য দুটা হ'ব—",
+            options: ["দুয়োটা ধনাত্মক", "দুয়োটা ঋণাত্মক", "এটা ধনাত্মক এটা ঋণাত্মক", "দুয়োটা সমান"],
+            correct: 1
+        },
+        {
+            question: "১৮/ ত্ৰিঘাত বহুপদৰ সৰ্বাধিক শূন্যৰ সংখ্যা কিমান?",
+            options: ["১", "২", "৩", "৪"],
+            correct: 2
+        },
+        {
+            question: "১৯/ x² + kx + k (k ≠ 0) বহুপদটোৰ শূন্য দুটা—",
+            options: ["দুয়োটা ধনাত্মক হ'ব নোৱাৰে", "দুয়োটা সদায় ধনাত্মক", "দুয়োটা সদায় সমান", "দুয়োটা সদায় ঋণাত্মক"],
+            correct: 0
+        },
+        {
+            question: "২০/ x³ - x বহুপদটোৰ শূন্যৰ সংখ্যা কিমান?",
+            options: ["১", "২", "৩", "০"],
+            correct: 2
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let answered = false;
+
+    function showQuestion() {
+        answered = false;
+        const currentData = quizData[currentQuestionIndex];
+        
+        document.getElementById("progress-display").innerText = "প্ৰশ্ন: " + (currentQuestionIndex + 1) + " / " + quizData.length;
+        document.getElementById("question-text").innerText = currentData.question;
+        
+        const optionsBox = document.getElementById("options-box");
+        optionsBox.innerHTML = "";
+        
+        currentData.options.forEach((option, index) => {
+            const optionDiv = document.createElement("div");
+            optionDiv.className = "option";
+            optionDiv.innerText = option;
+            optionDiv.onclick = () => checkAnswer(optionDiv, index);
+            optionsBox.appendChild(optionDiv);
+        });
+
+        document.getElementById("next-button").style.display = "none";
+    }
+
+    function checkAnswer(selectedOption, selectedIndex) {
+        if (answered) return;
+        answered = true;
+
+        const correctIndex = quizData[currentQuestionIndex].correct;
+
+        if (selectedIndex === correctIndex) {
+            selectedOption.style.backgroundColor = "#87d37c";
+            score++;
+            document.getElementById("score-display").innerText = "নম্বৰ: " + score;
+        } else {
+            selectedOption.style.backgroundColor = "#ff7675";
+            const options = document.getElementsByClassName("option");
+            options[correctIndex].style.backgroundColor = "#87d37c";
+        }
+
+        document.getElementById("next-button").style.display = "block";
+    }
+
+    function loadNextQuestion() {
+        currentQuestionIndex++;
+        
+        if (currentQuestionIndex < quizData.length) {
+            showQuestion();
+        } else {
+            document.getElementById("quiz-box").innerHTML = `
+                <h2 style="text-align: center; color: #4CAF50; font-size: 22px;">পৰীক্ষা সম্পূৰ্ণ হ'ল!</h2>
+                <p style="text-align: center; font-size: 18px;">আপুনি লাভ কৰা মুঠ নম্বৰ: <b>${score} / ${quizData.length}</b></p>
+            `;
+            document.getElementById("next-button").style.display = "none";
+        }
+    }
+
+    showQuestion();
+</script>
+
+</body>
+</html>
